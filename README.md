@@ -1,6 +1,5 @@
-# Spring Boot + VueJS Template
-
-This is a template for anyone looking to use Spring Boot + Vue.JS in the same project. 
+# NASApp
+Generate random photos from the NASA APOD API!
 
 ## Development
 
@@ -16,8 +15,6 @@ The Maven plugin `maven-resources-plugin` will copy the contents of the build di
 ## Deployment
 
 The `system.properties` is a file I used for Heroku to set the Java version and deploy the application. 
-
-https://spring-boot-vue-template.herokuapp.com/
 
 
 
