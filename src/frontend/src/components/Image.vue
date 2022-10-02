@@ -1,14 +1,15 @@
 <template>
 <div>
+  <h1>NASA API PHOTO GENERATOR</h1>
   <div class="container-one">
     <div class="container-item">
-      <form class="form" onsubmit="return false">
+      <form class="form" @submit.prevent="getImagesFromCall">
         <input
           type="number"
           min="1"
           max="5"
           class="form-field"
-          placeholder="NASA Photos Desired (5 photos max)"
+          placeholder="How many photos would you like? (6 max)"
           v-model="request"
         />
         <div id="error-message" v-if="outOfRange === true">{{ errorMsg }}</div>
@@ -17,17 +18,17 @@
   </div>
   <div class="container-two">
     <button
-      type="button"
+      type="submit"
       id="toggle"
       class="btn btn--primary btn--inside uppercase"
-      v-on:click="isHidden = false; getImagesFromCall()"
+      @:click="isHidden = false; getImagesFromCall()"
     >Confirm</button>
   </div>
     <div id="spacer"></div>
     <div v-show="!isHidden" v-if="request !== ''" class="container-three">
-      <div class="box">
+      <div class="box" v-for="image in images" v-bind:key="image">
         <div id="image" class="imgBx">
-          <img v-for="image in images" v-bind:key="image" src= {{ images.Array[0] }} />
+          <img src="image"/>
         </div>
           <div class="content">
           <div>
@@ -67,8 +68,8 @@ export default {
     getImagesFromCall() {
       if (this.request < 1 || this.request > 5) {
         this.outOfRange = true;
-        this.errorMsg = "Please enter a number from (1 - 5)";
-        this.delay(2000).then(() => this.reset());
+        this.errorMsg = "Please enter a number from (1 - 6)";
+        this.delay(2000).then(() => this.fullDataReset());
       } else
         ImageService.getImagesFromNasaApodApi(this.request).then(response => {
           this.images = response.data;
@@ -93,6 +94,10 @@ body {
   background: #f5f6fa;
   color: #9c9c9c;
   font: 1rem "PT Sans", sans-serif;
+}
+
+h1 {
+  text-align: center;
 }
 
 a {
@@ -182,17 +187,17 @@ a:hover {
   padding: 22px 18px;
 }
 
-
 .container-three .box {
   position: relative;
-  width: 275px;
-  height: 275px;
-  background: #000;
+  width: 20rem;
+  height: 20rem;
+  background: rgba(255, 255, 255, 0.342);
   transition: 0.5s;
   transform-style: preserve-3d;
   overflow: hidden;
   margin-right: 15px;
   margin-top: 45px;
+  border-radius: 8px;
 }
 
 .container-three:hover .box {
@@ -215,6 +220,7 @@ a:hover {
   left: 0;
   width: 100%;
   height: 100%;
+  
 }
 
 .container-three .box .imgBx:before {
@@ -224,9 +230,9 @@ a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, rgb(194, 188, 188), #000);
+  background: linear-gradient(180deg, #e4e5e6, #6f8296);
   z-index: 1;
-  opacity: 0;
+  opacity: .75;
   transition: 0.5s;
   mix-blend-mode: multiply;
 }

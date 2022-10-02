@@ -32,7 +32,7 @@ public class ImageController {
 
         } else throw new InvalidReqParamException();
 
-        if (count > 5) throw new InvalidReqParamException();
+        if (count > 6) throw new InvalidReqParamException();
 
         if (count <= 0) {
 
