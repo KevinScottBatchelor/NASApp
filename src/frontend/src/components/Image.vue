@@ -3,11 +3,11 @@
   <h1>NASA API PHOTO GENERATOR</h1>
   <div class="container-one">
     <div class="container-item">
-      <form class="form" @submit.prevent="getImagesFromCall">
+      <form id="myForm" class="form" @submit.prevent="getImagesFromCall">
         <input
           type="number"
           min="1"
-          max="5"
+          max="6"
           class="form-field"
           placeholder="How many photos would you like? (6 max)"
           v-model="request"
@@ -21,14 +21,14 @@
       type="submit"
       id="toggle"
       class="btn btn--primary btn--inside uppercase"
-      @:click="isHidden = false; getImagesFromCall()"
+      @:click="isHidden = false; getImagesFromCall(); clearForm()"
     >Confirm</button>
   </div>
     <div id="spacer"></div>
     <div v-show="!isHidden" v-if="request !== ''" class="container-three">
-      <div class="box" v-for="image in images" v-bind:key="image">
+      <div class="box" v-for="image in images" :key="image">
         <div id="image" class="imgBx">
-          <img src="image"/>
+          <img :src="image"/>
         </div>
           <div class="content">
           <div>
@@ -65,8 +65,11 @@ export default {
     fullDataReset() {
       Object.assign(this.$data, this.$options.data.apply(this));
     },
+    clearForm() {
+      document.getElementById("myForm").reset();
+    },
     getImagesFromCall() {
-      if (this.request < 1 || this.request > 5) {
+      if (this.request < 1 || this.request > 6) {
         this.outOfRange = true;
         this.errorMsg = "Please enter a number from (1 - 6)";
         this.delay(2000).then(() => this.fullDataReset());
@@ -169,7 +172,7 @@ a:hover {
 }
 
 .form {
-  width: 50vw;
+  width: 51vw;
   color: #a3a3a3;
   font: inherit;
   border: 0;
@@ -184,7 +187,7 @@ a:hover {
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
   border: 0;
   outline: 0;
-  padding: 22px 18px;
+  padding: 22px 8px;
 }
 
 .container-three .box {
