@@ -4,7 +4,7 @@ module.exports = {
         port: 3000,
         proxy: {
             '/api': {
-                target: 'http://localhost:8080',
+                target: 'https://nasa-apod-photos.herokuapp.com/',
                 ws: true,
                 changeOrigin: true
             }
