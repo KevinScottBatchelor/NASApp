@@ -1,12 +1,15 @@
 <template>
 <div>
+  <div id="title">
   <h1>NASA API PHOTO GENERATOR</h1>
+  </div>
   <div class="container-one">
     <div class="container-item">
-      <form id="myForm" class="form" @submit.prevent="getImagesFromCall">
+      <form id="myForm" class="form">
         <input
           type="number"
           min="1"
+          step="1"
           max="6"
           class="form-field"
           placeholder="How many photos would you like? (6 max)"
@@ -22,11 +25,11 @@
       id="toggle"
       class="btn btn--primary btn--inside uppercase"
       @:click="isHidden = false; getImagesFromCall(); clearForm()"
-    >Confirm</button>
+    >Generate</button>
   </div>
     <div id="spacer"></div>
-    <div v-show="!isHidden" v-if="request !== ''" class="container-three">
-      <div class="box" v-for="image in images" :key="image">
+    <div class="container-three">
+      <div class="box" v-show="!isHidden" v-for="image in images" :key="image">
         <div id="image" class="imgBx">
           <img :src="image"/>
         </div>
@@ -66,7 +69,21 @@ export default {
       Object.assign(this.$data, this.$options.data.apply(this));
     },
     clearForm() {
-      document.getElementById("myForm").reset();
+      this.request = "";
+    },
+    isRequestDecimal() {
+      this.request = (this.request - Math.floor(this.request)) !==0;
+      if(this.request) 
+        this.outOfRange = true;
+        this.errorMsg = "Please enter a whole number, no decimals! (1 - 6)";
+        this.delay(2000).then(() => this.fullDataReset());
+    },
+    isRequestOutOfRange() {
+      if(this.request < 1 || this.request > 6) {
+        this.outOfRange = true;
+        this.errorMsg = "Please enter a number from (1 - 6)";
+        this.delay(2000).then(() => this.fullDataReset());
+      }
     },
     getImagesFromCall() {
       if (this.request < 1 || this.request > 6) {
@@ -129,7 +146,7 @@ a:hover {
 
 .container-three {
   position: relative;
-  width: 1160px;
+  width: 90vw;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
