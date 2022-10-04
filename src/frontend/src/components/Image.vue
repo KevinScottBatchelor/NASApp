@@ -8,12 +8,16 @@
       <form id="myForm" class="form">
         <input
           type="number"
+          pattern="[1-6]"
           min="1"
           step="1"
           max="6"
+          maxlength="1"
           class="form-field"
           placeholder="How many photos would you like? (6 max)"
           v-model="request"
+          onkeypress='return event.charCode >= 49 && event.charCode <= 54'
+          @keydown="filterKey"
         />
         <div id="error-message" v-if="outOfRange === true">{{ errorMsg }}</div>
       </form>
@@ -71,18 +75,15 @@ export default {
     clearForm() {
       this.request = "";
     },
-    isRequestDecimal() {
-      this.request = (this.request - Math.floor(this.request)) !==0;
-      if(this.request) 
-        this.outOfRange = true;
-        this.errorMsg = "Please enter a whole number, no decimals! (1 - 6)";
-        this.delay(2000).then(() => this.fullDataReset());
-    },
-    isRequestOutOfRange() {
-      if(this.request < 1 || this.request > 6) {
-        this.outOfRange = true;
-        this.errorMsg = "Please enter a number from (1 - 6)";
-        this.delay(2000).then(() => this.fullDataReset());
+    filterKey(x) {
+      const value = x.target.value;
+      const key = x.key;
+      console.log(value, key)
+      if (String(value).length === 1) {
+        if (!isNaN(Number(key))) {
+          x.preventDefault();
+          return;
+        } 
       }
     },
     getImagesFromCall() {
