@@ -3,7 +3,7 @@ Generate random photos from the NASA APOD API!
 
 ## Check out the app live on Heroku:
 
-# This is a heroku hobby project so please give it 10-20s for the cold start!
+## This is a heroku hobby project so please give it 10-20s for the cold start!
 
 https://nasa-apod-photos.herokuapp.com/
 
