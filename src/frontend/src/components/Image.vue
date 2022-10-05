@@ -33,17 +33,13 @@
   </div>
     <div id="spacer"></div>
     <div class="container-three">
-      <div class="box" v-show="!isHidden" v-for="image in images" :key="image">
+      <div class="box" v-show="!isHidden" v-for="image in images" :key="image.url">
         <div id="image" class="imgBx">
-          <img :src="image"/>
+          <img :src="image.url"/>
         </div>
           <div class="content">
           <div>
-            <h2>Image Title</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi accusamus molestias quidem
-            iusto.
-          </p>
+            <h2>{{image.title}}</h2>
         </div>
       </div>
     </div>

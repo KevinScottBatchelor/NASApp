@@ -25,7 +25,7 @@ public class ImageController {
     private int count;
 
     @RequestMapping(value = "/image{request}")
-    public List<String> getImages(@RequestParam String request) {
+    public List<Image> getImages(@RequestParam String request) {
 
         if (request != null && request.length() == 1) {
             count = Integer.parseInt(request);
@@ -40,7 +40,7 @@ public class ImageController {
 
         } else {
 
-            String url = "https://api.nasa.gov/planetary/apod?" + API_KEY + request;
+            String url = "https://api.nasa.gov/planetary/apod?" + API_KEY + request + "&thumbs=True";
             RestTemplate restTemplate = new RestTemplate();
 
             ResponseEntity<List<Image>> responseEntity =
@@ -53,9 +53,7 @@ public class ImageController {
 
             List<Image> images = responseEntity.getBody();
 
-            return images.stream()
-                    .map(Image::getUrl)
-                    .collect(Collectors.toList());
+            return images;
         }
     }
 }
