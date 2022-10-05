@@ -1,6 +1,10 @@
 # NASApp
 Generate random photos from the NASA APOD API!
 
+## Check out the app live on Heroku:
+
+https://nasa-apod-photos.herokuapp.com/
+
 ## Development
 
 - Run the Spring Boot application which will run on port 8080
