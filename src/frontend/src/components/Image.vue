@@ -14,10 +14,9 @@
           max="6"
           maxlength="1"
           class="form-field"
-          placeholder="How many photos would you like? (6 max)"
+          placeholder="How many photos? (6 max)"
           v-model="request"
-          onkeypress='return event.charCode >= 49 && event.charCode <= 54'
-          @keydown="filterKey"
+          onkeypress='return event.charCode >= 48 && event.charCode <= 57'
         />
         <div id="error-message" v-if="outOfRange === true">{{ errorMsg }}</div>
       </form>
@@ -28,7 +27,7 @@
       type="submit"
       id="toggle"
       class="btn btn--primary btn--inside uppercase"
-      @:click="isHidden = false; getImagesFromCall(); clearForm()"
+      @:click="isHidden = false; getImagesFromCall()"
     >Generate</button>
   </div>
     <div id="spacer"></div>
@@ -70,23 +69,13 @@ export default {
     },
     clearForm() {
       this.request = "";
-    },
-    filterKey(x) {
-      const value = x.target.value;
-      const key = x.key;
-      console.log(value, key)
-      if (String(value).length === 1) {
-        if (!isNaN(Number(key))) {
-          x.preventDefault();
-          return;
-        } 
-      }
+      this.errorMsg = "";
     },
     getImagesFromCall() {
       if (this.request < 1 || this.request > 6) {
         this.outOfRange = true;
         this.errorMsg = "Please enter a number from (1 - 6)";
-        this.delay(2000).then(() => this.fullDataReset());
+        this.delay(2000).then(() => this.clearForm());
       } else
         ImageService.getImagesFromNasaApodApi(this.request).then(response => {
           this.images = response.data;
@@ -217,14 +206,6 @@ a:hover {
   border-radius: 8px;
 }
 
-.container-three:hover .box {
-  transform: rotateY(25deg);
-}
-
-.container-three .box:hover ~ .box {
-  transform: rotateY(-25deg);
-}
-
 .container-three .box:hover {
   transform: rotateY(0deg) scale(1.25);
   z-index: 1;
@@ -237,7 +218,6 @@ a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  
 }
 
 .container-three .box .imgBx:before {

@@ -9,6 +9,7 @@ public class Image {
     private String serviceVersion;
     private String title;
     private String url;
+    private String thumbnailUrl;
 
     public String getCopyright() {
         return copyright;
@@ -74,4 +75,7 @@ public class Image {
         this.url = url;
     }
 
+    public String getThumbnailUrl() { return thumbnailUrl; }
+
+    public void setThumbnailUrl(String thumbnailUrl) { this.thumbnailUrl = thumbnailUrl; }
 }

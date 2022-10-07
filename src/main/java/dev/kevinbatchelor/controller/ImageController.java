@@ -40,7 +40,7 @@ public class ImageController {
 
         } else {
 
-            String url = "https://api.nasa.gov/planetary/apod?" + API_KEY + request + "&thumbs=True";
+            String url = "https://api.nasa.gov/planetary/apod?" + API_KEY + request + "&thumbs=true";
             RestTemplate restTemplate = new RestTemplate();
 
             ResponseEntity<List<Image>> responseEntity =
