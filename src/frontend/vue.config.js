@@ -1,10 +1,11 @@
+//'https://nasa-apod-photos.herokuapp.com/'
 
 module.exports = {
     devServer: {
         port: 3000,
         proxy: {
             '/api': {
-                target: 'https://nasa-apod-photos.herokuapp.com/',
+                target: 'http://localhost:8080',
                 ws: true,
                 changeOrigin: true
             }
